@@ -6,9 +6,16 @@ from multi_agent_bandits.strategies.ucb_baseline import UCB_BaselineAgent
 from multi_agent_bandits.strategies.random import RandomAgent
 from multi_agent_bandits.strategies.epsilon_greedy import EpsilonGreedyAgent
 
+import random
+import numpy as np
 
-def main(steps=1000, save_dir=None, plot_rewards=False, plot_frequencies=False):
-
+def main(steps=1000, save_dir=None, plot_rewards=False, plot_frequencies=False, seed=None):
+    if seed is not None:
+        random.seed(seed)
+        try:
+            np.random.seed(seed)
+        except Exception:
+            pass
     n_agents = 3
 
     arms = [

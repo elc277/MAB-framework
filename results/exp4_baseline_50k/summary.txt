@@ -1,0 +1,18 @@
+==== Experiment Summary ====
+Timesteps: 50000
+Number of arms: 3
+Arms:
+  Arm 0: mean=1.0, sd=1.0
+  Arm 1: mean=2.0, sd=1.0
+  Arm 2: mean=1.5, sd=1.0
+Collision policy: linear_share
+Number of agents: 3
+Agents:
+  - Agent 0: RandomAgent
+  - Agent 1: EpsilonGreedyAgent
+  - Agent 2: UCB_BaselineAgent
+Total rewards:
+  Agent 0 (RandomAgent): 46282.10
+  Agent 1 (EpsilonGreedyAgent): 80058.79
+  Agent 2 (UCB_BaselineAgent): 61341.86
+============================
