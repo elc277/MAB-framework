@@ -1,7 +1,6 @@
 import os
 import sys
 
-# Make the project root importable when running this file directly
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 
 from multi_agent_bandits.core.environment import Environment
