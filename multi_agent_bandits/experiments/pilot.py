@@ -30,7 +30,8 @@ def compute_reward_inequality(total_rewards):
 
 def main(steps=1000, save_dir=None, seed=None):
     epsilons = [0.00, 0.01, 0.05, 0.10, 0.20, 0.30]
-    agent_counts = [2, 3, 4, 6]
+    agent_counts = [1, 2, 3, 4, 6]
+    std_values = [0.5, 1.0, 2.0]
     seeds = list(range(50)) if seed is None else [seed]
 
     if save_dir is None:
@@ -38,13 +39,14 @@ def main(steps=1000, save_dir=None, seed=None):
         save_dir = os.path.join(project_root, "results", "pilot")
 
     os.makedirs(save_dir, exist_ok=True)
-    output_csv = os.path.join(save_dir, "pilot_summary.csv")
+    output_csv = os.path.join(save_dir, "pilot_summary_with_std.csv")
 
     with open(output_csv, "w", newline="") as f:
         writer = csv.writer(f)
         writer.writerow([
             "n_agents",
             "n_arms",
+            "std",
             "epsilon",
             "seed",
             "steps",
@@ -54,65 +56,67 @@ def main(steps=1000, save_dir=None, seed=None):
             "reward_inequality"
         ])
 
-        for n_agents in agent_counts:
-            for epsilon in epsilons:
-                for run_seed in seeds:
-                    random.seed(run_seed)
-                    np.random.seed(run_seed)
+        for std in std_values:
+            for n_agents in agent_counts:
+                for epsilon in epsilons:
+                    for run_seed in seeds:
+                        random.seed(run_seed)
+                        np.random.seed(run_seed)
 
-                    arms = [
-                        Arm(mean=1.0, sd=1.0),
-                        Arm(mean=2.0, sd=1.0),
-                        Arm(mean=1.5, sd=1.0)
-                    ]
+                        arms = [
+                            Arm(mean=1.0, sd=std),
+                            Arm(mean=2.0, sd=std),
+                            Arm(mean=1.5, sd=std)
+                        ]
 
-                    env = Environment(
-                        n_agents=n_agents,
-                        arms=arms
-                    )
-
-                    agents = [
-                        EpsilonGreedyAgent(
-                            env.n_arms,
-                            epsilon=epsilon,
-                            name=f"EGreedy(eps={epsilon})"
+                        env = Environment(
+                            n_agents=n_agents,
+                            arms=arms
                         )
-                        for _ in range(n_agents)
-                    ]
 
-                    runner = ExperimentRunner(
-                        env,
-                        agents,
-                        timestep_limit=steps,
-                        save_dir=None
-                    )
+                        agents = [
+                            EpsilonGreedyAgent(
+                                env.n_arms,
+                                epsilon=epsilon,
+                                name=f"EGreedy(eps={epsilon})"
+                            )
+                            for _ in range(n_agents)
+                        ]
 
-                    choices_log, rewards_log = runner.run(
-                        plot_rewards=False,
-                        plot_frequencies=False
-                    )
+                        runner = ExperimentRunner(
+                            env,
+                            agents,
+                            timestep_limit=steps,
+                            save_dir=None
+                        )
 
-                    group_total_reward = sum(runner.total_rewards)
-                    mean_agent_reward = group_total_reward / n_agents
-                    collision_rate = compute_collision_rate(choices_log)
-                    reward_inequality = compute_reward_inequality(runner.total_rewards)
+                        choices_log, rewards_log = runner.run(
+                            plot_rewards=False,
+                            plot_frequencies=False
+                        )
 
-                    writer.writerow([
-                        n_agents,
-                        env.n_arms,
-                        epsilon,
-                        run_seed,
-                        steps,
-                        group_total_reward,
-                        mean_agent_reward,
-                        collision_rate,
-                        reward_inequality
-                    ])
+                        group_total_reward = sum(runner.total_rewards)
+                        mean_agent_reward = group_total_reward / n_agents
+                        collision_rate = compute_collision_rate(choices_log)
+                        reward_inequality = compute_reward_inequality(runner.total_rewards)
 
-                    print(
-                        f"Done | agents={n_agents} | epsilon={epsilon:.2f} | seed={run_seed} "
-                        f"| group_reward={group_total_reward:.2f} | collisions={collision_rate:.3f}"
-                    )
+                        writer.writerow([
+                            n_agents,
+                            env.n_arms,
+                            std,
+                            epsilon,
+                            run_seed,
+                            steps,
+                            group_total_reward,
+                            mean_agent_reward,
+                            collision_rate,
+                            reward_inequality
+                        ])
+
+                        print(
+                            f"Done | std={std:.2f} | agents={n_agents} | epsilon={epsilon:.2f} | seed={run_seed} "
+                            f"| group_reward={group_total_reward:.2f} | collisions={collision_rate:.3f}"
+                        )
 
     print(f"\nPilot finished. Results saved to: {output_csv}")
 
