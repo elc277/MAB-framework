@@ -149,5 +149,6 @@ def main(
 
 if __name__ == "__main__":
     main(
-        csv_path=r"/mnt/data/experiment_1_to_30_agents.csv"
+        csv_path=r"results/experiment_1_to_30_agents/experiment_1_to_30_agents.csv",
+        out_dir=r"results/experiment_1_to_30_agents/plots"
     )
