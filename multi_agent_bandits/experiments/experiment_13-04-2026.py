@@ -140,7 +140,7 @@ def main(steps=1000, save_dir=None, seed=None):
                         f"collisions={collision_rate:.3f}"
                     )
 
-    print(f"\nZero-on-collision experiment finished. Results saved to: {output_csv}")
+    print(f"\nZero-on-collision experiment results saved to: {output_csv}")
 
 
 if __name__ == "__main__":

@@ -128,7 +128,7 @@ def main(steps=1000, save_dir=None, seed=None):
                         f"collisions={collision_rate:.3f}"
                     )
 
-    print(f"\nScaling experiment finished. Results saved to: {output_csv}")
+    print(f"\nScaling experiment results saved to: {output_csv}")
 
 
 if __name__ == "__main__":

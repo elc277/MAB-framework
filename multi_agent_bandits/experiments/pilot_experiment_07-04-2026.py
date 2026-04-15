@@ -118,7 +118,7 @@ def main(steps=1000, save_dir=None, seed=None):
                             f"| group_reward={group_total_reward:.2f} | collisions={collision_rate:.3f}"
                         )
 
-    print(f"\nPilot finished. Results saved to: {output_csv}")
+    print(f"\nPilot results saved to: {output_csv}")
 
 
 if __name__ == "__main__":

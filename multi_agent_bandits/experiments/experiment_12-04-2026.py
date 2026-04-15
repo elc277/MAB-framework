@@ -136,7 +136,7 @@ def main(steps=1000, save_dir=None, seed=None):
                         f"collisions={collision_rate:.3f}"
                     )
 
-    print(f"\nNon-repeated scaling experiment finished. Results saved to: {output_csv}")
+    print(f"\nNon-repeated scaling experiment results saved to: {output_csv}")
 
 
 if __name__ == "__main__":
