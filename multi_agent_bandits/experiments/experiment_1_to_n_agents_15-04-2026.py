@@ -1,5 +1,6 @@
 #GENERAL NON-REPEATED SCALING EXPERIMENT
 #Ratio fixed at 1:3 => n agents, 3n arms
+#Takes a long time to run
 
 import os
 import sys
