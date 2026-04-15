@@ -33,7 +33,7 @@ def compute_reward_inequality(total_rewards):
 
 def build_arms_for_config(n_arms, std):
     """
-    Build a smooth non-repeated reward structure for any n_arms >= 3.
+    Builds a smooth non-repeated reward structure for any n_arms >= 3.
     The range widens gradually as n_arms grows.
     """
     if n_arms < 3:
