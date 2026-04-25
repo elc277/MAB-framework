@@ -2,6 +2,8 @@
 # Everybody gets full value on collision
 # n = 100 agents
 # Ratios tested: 1:1, 1:2, 1:3, 1:4, 1:5, 1:20
+# Collision policy 1:
+# Everybody gets full reward
 
 import os
 import sys
@@ -19,8 +21,6 @@ from multi_agent_bandits.strategies.epsilon_greedy import EpsilonGreedyAgent
 
 
 
-# Collision policy 1:
-# Everybody gets full reward
 def full_value_on_collision(raw_reward, n_agents):
     return [raw_reward] * n_agents
 

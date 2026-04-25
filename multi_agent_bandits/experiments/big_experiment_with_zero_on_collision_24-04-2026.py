@@ -2,6 +2,8 @@
 # Nobody gets anything on collision / zero-on-collision
 # n = 100 agents
 # Ratios tested: 1:1, 1:2, 1:3, 1:4, 1:5, 1:20
+# Collision policy 2:
+# Nobody gets reward on collision
 
 import os
 import sys
@@ -18,8 +20,6 @@ from multi_agent_bandits.core.arm import Arm
 from multi_agent_bandits.strategies.epsilon_greedy import EpsilonGreedyAgent
 
 
-# Collision policy 2:
-# Nobody gets reward on collision
 def zero_on_collision(raw_reward, n_agents):
     return [0.0] * n_agents
 
