@@ -84,12 +84,12 @@ def main(
 
     if save_dir is None:
         project_root = os.path.abspath(
-            os.path.join(os.path.dirname(__file__), "..", "..", "..", "..")
+            os.path.join(os.path.dirname(__file__), "..", "..", "..")
         )
         save_dir = os.path.join(
             project_root,
             "results",
-            f"big_experiment_{n_agents}_agents_reversed_ratios_full_value_collision"
+            f"big_r_experiment_{n_agents}_agents_reversed_ratios_full_value_collision"
         )
 
     if output_filename is None:
