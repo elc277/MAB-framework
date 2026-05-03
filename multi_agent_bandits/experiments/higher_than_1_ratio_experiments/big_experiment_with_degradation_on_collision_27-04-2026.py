@@ -19,7 +19,7 @@ import random
 import statistics
 import numpy as np
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..","..")))
 
 from multi_agent_bandits.core.environment import Environment
 from multi_agent_bandits.core.experiment_runner import ExperimentRunner

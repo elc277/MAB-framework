@@ -11,7 +11,7 @@ import random
 import statistics
 import numpy as np
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..")))
 
 from multi_agent_bandits.core.environment import Environment
 from multi_agent_bandits.core.experiment_runner import ExperimentRunner
@@ -97,11 +97,11 @@ def main(
         save_dir = os.path.join(
             project_root,
             "results",
-            f"big_experiment_{n_agents}_agents_reversed_ratios"
+            f"big_r_experiment_{n_agents}_agents_reversed_ratios"
         )
 
     if output_filename is None:
-        output_filename = f"big_experiment_{n_agents}_agents_reversed_ratios.csv"
+        output_filename = f"big_r_experiment_{n_agents}_agents_reversed_ratios.csv"
 
     os.makedirs(save_dir, exist_ok=True)
     output_csv = os.path.join(save_dir, output_filename)
