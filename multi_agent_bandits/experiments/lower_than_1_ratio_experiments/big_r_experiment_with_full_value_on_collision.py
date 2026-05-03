@@ -1,8 +1,7 @@
-# FIXED N EXPERIMENT
+# FIXED N EXPERIMENT - COLLISION POLICY 1
+# Everybody gets full value on collision
 # n = 100 agents
 # Reversed ratios tested: 2:1, 3:1, 4:1, 5:1, 20:1
-# Runs multiple epsilons for each ratio
-# Takes a long time to run !!!!
 
 import os
 import sys
@@ -17,6 +16,10 @@ from multi_agent_bandits.core.environment import Environment
 from multi_agent_bandits.core.experiment_runner import ExperimentRunner
 from multi_agent_bandits.core.arm import Arm
 from multi_agent_bandits.strategies.epsilon_greedy import EpsilonGreedyAgent
+
+
+def full_value_on_collision(raw_reward, n_agents):
+    return [raw_reward] * n_agents
 
 
 def compute_collision_rate(choices_log):
@@ -34,10 +37,6 @@ def compute_reward_inequality(total_rewards):
 
 
 def build_arms_for_config(n_arms, std, agents_per_arm):
-    """
-    Smooth non-repeated reward structure.
-    Reward range widens gradually as number of arms grows.
-    """
     if n_arms < 1:
         raise ValueError("n_arms must be at least 1")
 
@@ -65,13 +64,6 @@ def main(
     epsilons=None,
     std=1.0,
 ):
-    """
-    Runs experiment with fixed n_agents and lower-than-1 arm ratios.
-
-    Example:
-        reversed ratio 2:1 => 100 agents, 50 arms
-        reversed ratio 5:1 => 100 agents, 20 arms
-    """
 
     if n_agents < 1:
         raise ValueError("n_agents must be at least 1")
@@ -92,16 +84,16 @@ def main(
 
     if save_dir is None:
         project_root = os.path.abspath(
-            os.path.join(os.path.dirname(__file__), "..", "..","..")
+            os.path.join(os.path.dirname(__file__), "..", "..", "..", "..")
         )
         save_dir = os.path.join(
             project_root,
             "results",
-            f"big_r_experiment_{n_agents}_agents_reversed_ratios"
+            f"big_experiment_{n_agents}_agents_reversed_ratios_full_value_collision"
         )
 
     if output_filename is None:
-        output_filename = f"big_r_experiment_{n_agents}_agents_reversed_ratios.csv"
+        output_filename = f"big_experiment_{n_agents}_agents_reversed_ratios_full_value_collision.csv"
 
     os.makedirs(save_dir, exist_ok=True)
     output_csv = os.path.join(save_dir, output_filename)
@@ -109,6 +101,7 @@ def main(
     with open(output_csv, "w", newline="") as f:
         writer = csv.writer(f)
         writer.writerow([
+            "collision_policy",
             "n_agents",
             "n_arms",
             "agent_to_arm_ratio",
@@ -140,7 +133,8 @@ def main(
 
                     env = Environment(
                         n_agents=n_agents,
-                        arms=arms
+                        arms=arms,
+                        collision_policy=full_value_on_collision
                     )
 
                     agents = [
@@ -172,6 +166,7 @@ def main(
                     )
 
                     writer.writerow([
+                        "full_value",
                         n_agents,
                         n_arms,
                         ratio,
@@ -187,7 +182,7 @@ def main(
                     ])
 
                     print(
-                        f"Done | agents={n_agents} | arms={n_arms} | "
+                        f"Done | policy=full_value | agents={n_agents} | arms={n_arms} | "
                         f"ratio={agents_per_arm}:1 | epsilon={epsilon:.2f} | "
                         f"seed={run_seed} | reward={group_total_reward:.2f} | "
                         f"collisions={collision_rate:.3f}"
