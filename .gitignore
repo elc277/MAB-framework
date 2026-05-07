@@ -206,3 +206,4 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 
+results/full_ratio_sweep_1_to_100_agents_full_value_collision_multicore/full_ratio_sweep_1_to_100_agents_full_value_collision_multicore.csv
