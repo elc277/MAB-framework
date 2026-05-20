@@ -267,6 +267,6 @@ def main(
 
 if __name__ == "__main__":
     main(
-        csv_path=r"results/full_ratio_sweep_1_to_100_agents_zero_on_collision_multicore/full_ratio_sweep_1_to_100_agents_zero_on_collision_multicore.csv",
-        out_dir=r"multi_agent_bandits/experiments/plots_new/full_ratio_sweep_1_to_100_agents_zero_on_collision_multicore_plots"
+        csv_path=r"results/full_ratio_sweep_1_to_100_agents_degradation_collision_multicore_part_1_under/full_ratio_sweep_degradation_complete.csv",
+        out_dir=r"multi_agent_bandits/experiments/plots_new/full_ratio_sweep_1_to_100_agents_degradation_multicore_plots"
     )
